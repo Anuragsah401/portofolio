@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light Mode - Editorial Paper & Architectural Ink */
+  --bg-primary: #F8F8F6;
+  --bg-elevated: #FFFFFF;
+  --bg-surface: #F1F1EE;
+  --bg-subtle: #E8E8E3;
+
+  --text-primary: #0D0E12;
+  --text-secondary: #4A4D57;
+  --text-muted: #767A87;
+
+  --border-subtle: rgba(13, 14, 18, 0.08);
+  --border-strong: rgba(13, 14, 18, 0.16);
+
+  /* Sophisticated Precision Emerald Accent */
+  --accent-primary: #0D9467;
+  --accent-soft: rgba(13, 148, 103, 0.09);
+  --accent-border: rgba(13, 148, 103, 0.28);
+
+  --shadow-surface: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px -4px rgba(0, 0, 0, 0.04);
+  --shadow-elevated: 0 12px 36px -8px rgba(0, 0, 0, 0.08);
+}
+
+.dark {
+  /* Dark Mode (Primary) - Deep Charcoal / Near-Black Obsidian */
+  --bg-primary: #090A0D;
+  --bg-elevated: #101217;
+  --bg-surface: #151820;
+  --bg-subtle: #1C202B;
+
+  --text-primary: #F3F4F6;
+  --text-secondary: #9CA3AF;
+  --text-muted: #646B78;
+
+  --border-subtle: rgba(255, 255, 255, 0.075);
+  --border-strong: rgba(255, 255, 255, 0.15);
+
+  /* Sophisticated Precision Emerald Accent */
+  --accent-primary: #10B981;
+  --accent-soft: rgba(16, 185, 129, 0.10);
+  --accent-border: rgba(16, 185, 129, 0.30);
+
+  --shadow-surface: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset, 0 12px 32px -8px rgba(0, 0, 0, 0.5);
+  --shadow-elevated: 0 1px 0 0 rgba(255, 255, 255, 0.07) inset, 0 24px 48px -12px rgba(0, 0, 0, 0.75);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  /* Visible accessible keyboard focus ring */
+  :focus-visible {
+    outline: 2px solid var(--accent-primary);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+}
+
+/* Architectural Grid Background Pattern */
+.bg-architectural-grid {
+  background-size: 48px 48px;
+  background-image: 
+    linear-gradient(to right, var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
+}
+
+.bg-dot-matrix {
+  background-image: radial-gradient(var(--border-strong) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
