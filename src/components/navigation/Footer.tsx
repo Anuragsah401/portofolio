@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Mail } from 'lucide-react';
 import { socialData } from '../../data/social';
-import { ContactSection } from '../contact/ContactSection';
+import { smoothScrollTo } from '../../utils/smoothScroll';
 
 export function FloatingAssistantBadge() {
   const [open, setOpen] = useState(false);
@@ -12,8 +12,9 @@ export function FloatingAssistantBadge() {
     <div className="fixed bottom-6 right-6 z-40 hidden sm:block">
       {open && (
         <motion.div
-          initial={{ opacity: 0, y: 12, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.18 }}
           className="editorial-card mb-3 w-72 p-4"
         >
           <div className="flex items-center justify-between border-b border-border-subtle pb-2">
@@ -44,21 +45,19 @@ export function FloatingAssistantBadge() {
         </motion.div>
       )}
 
-      {/* Circular Monochrome Badge with Live Green Dot (Directly inspired by bottom-right of reference image) */}
-      <motion.button
+      {/* Circular Monochrome Badge with Live Green Dot */}
+      <button
         type="button"
         onClick={() => setOpen((prev) => !prev)}
-        whileHover={{ scale: 1.06 }}
-        whileTap={{ scale: 0.96 }}
         aria-label="Toggle availability card"
-        className="relative flex h-14 w-14 items-center justify-center rounded-full border-2 border-border-strong bg-[#151515] text-white shadow-[4px_4px_0px_0px_var(--accent-primary)]"
+        className="gpu-layer relative flex h-14 w-14 items-center justify-center rounded-full border-2 border-border-strong bg-[#151515] text-white shadow-[4px_4px_0px_0px_var(--accent-primary)] transition-transform duration-150 hover:scale-105 active:scale-95"
       >
         <span className="font-mono text-sm font-extrabold tracking-tighter">AS</span>
         <span
           aria-hidden="true"
           className="absolute bottom-0.5 left-0.5 h-3.5 w-3.5 rounded-full border-2 border-bg-primary bg-emerald-500"
         />
-      </motion.button>
+      </button>
     </div>
   );
 }
@@ -74,7 +73,7 @@ export function Footer() {
           <div>
             <Link
               to="/"
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              onClick={() => smoothScrollTo(0, 950)}
               className="inline-flex items-center gap-2.5 text-lg font-extrabold tracking-tight text-text-primary"
             >
               <span className="h-3 w-3 rounded-full bg-accent" />
@@ -126,5 +125,3 @@ export function Footer() {
     </footer>
   );
 }
-
-export { ContactSection };

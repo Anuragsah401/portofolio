@@ -3,27 +3,30 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { Navbar } from '../components/navigation/Navbar';
 import { Footer } from '../components/navigation/Footer';
 import { CustomCursor } from '../components/ui/CustomCursor';
+import { smoothScrollTo, useSmoothWheelScroll } from '../utils/smoothScroll';
 
 export function MainLayout() {
   const { pathname, hash } = useLocation();
 
+  // Enable silky 60fps damped wheel scrolling on desktop
+  useSmoothWheelScroll();
+
   useEffect(() => {
     if (hash) {
       const id = hash.replace('#', '');
-      const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-        return;
-      }
+      setTimeout(() => {
+        smoothScrollTo(id, 1150);
+      }, 60);
+      return;
     }
-    window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    window.scrollTo(0, 0);
   }, [pathname, hash]);
 
   return (
     <div className="min-h-screen flex flex-col bg-bg-primary text-text-primary">
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-sm focus:bg-accent focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:font-semibold focus:text-bg-primary"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded-sm focus:bg-accent focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:font-semibold focus:text-white"
       >
         Skip to content
       </a>

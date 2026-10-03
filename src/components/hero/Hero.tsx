@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { HeroSystemVisual } from './HeroSystemVisual';
+import { smoothScrollTo } from '../../utils/smoothScroll';
 
 const headlineLines = [
   'I build digital',
@@ -13,7 +14,7 @@ export function Hero() {
     const el = document.getElementById(id);
     if (el) {
       e.preventDefault();
-      el.scrollIntoView({ behavior: 'smooth' });
+      smoothScrollTo(id, 1150);
     }
   };
 
@@ -25,7 +26,7 @@ export function Hero() {
           <div className="lg:col-span-6">
             {/* Positioning Eyebrow */}
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
+              initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.45 }}
               className="mb-6 inline-flex items-center gap-2.5 border border-border-strong bg-bg-elevated px-3.5 py-1.5 font-mono text-xs font-bold uppercase tracking-wider text-text-primary shadow-[3px_3px_0px_0px_#111111]"
@@ -39,12 +40,12 @@ export function Hero() {
               {headlineLines.map((line, idx) => (
                 <motion.span
                   key={line}
-                  initial={{ opacity: 0, y: 28 }}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    duration: 0.6,
-                    delay: 0.08 * idx,
-                    ease: [0.16, 1, 0.3, 1],
+                    duration: 0.55,
+                    delay: 0.07 * idx,
+                    ease: [0.22, 1, 0.36, 1],
                   }}
                   className="block"
                 >
@@ -59,24 +60,15 @@ export function Hero() {
               ))}
             </h1>
 
-            {/* Signature Hand-Drawn Sketch Waveform + Floating Spec Sheets (Directly inspired by the reference image) */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.35 }}
-              className="my-8 max-w-md"
-              aria-hidden="true"
-            >
+            {/* Signature Hand-Drawn Sketch Waveform + Floating Spec Sheets */}
+            <div className="my-8 max-w-md" aria-hidden="true">
               <svg
                 viewBox="0 0 420 68"
                 fill="none"
                 className="w-full overflow-visible text-text-primary"
               >
                 {/* Floating Tilted Document / Product Spec Icon 1 (Left) */}
-                <motion.g
-                  animate={{ y: [0, -4, 0], rotate: [-2, 2, -2] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                >
+                <g>
                   <path
                     d="M8 22 L20 10 L34 20 L22 38 Z"
                     stroke="currentColor"
@@ -86,9 +78,9 @@ export function Hero() {
                   <line x1="16" y1="19" x2="25" y2="25" stroke="currentColor" strokeWidth="1.3" />
                   <line x1="14" y1="23" x2="22" y2="29" stroke="currentColor" strokeWidth="1.3" />
                   <line x1="12" y1="27" x2="19" y2="32" stroke="currentColor" strokeWidth="1.3" />
-                </motion.g>
+                </g>
 
-                {/* Animated Hand-Sketched Sine Squiggle Extending into Long Architectural Line */}
+                {/* Hand-Sketched Sine Squiggle Extending into Long Architectural Line */}
                 <motion.path
                   d="M42 36 L68 36 C72 36 74 16 78 16 C82 16 84 52 88 52 C92 52 94 20 98 20 C102 20 104 48 108 48 C112 48 114 22 118 22 C121 22 123 36 128 36 L408 34"
                   stroke="currentColor"
@@ -97,14 +89,11 @@ export function Hero() {
                   strokeLinejoin="round"
                   initial={{ pathLength: 0 }}
                   animate={{ pathLength: 1 }}
-                  transition={{ duration: 1.4, delay: 0.3, ease: 'easeInOut' }}
+                  transition={{ duration: 1.2, delay: 0.2, ease: 'easeOut' }}
                 />
 
                 {/* Floating Tilted Spec Note 2 (Bottom Center) */}
-                <motion.g
-                  animate={{ y: [0, 4, 0], rotate: [3, -2, 3] }}
-                  transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
-                >
+                <g>
                   <path
                     d="M128 50 L142 40 L154 52 L140 63 Z"
                     stroke="currentColor"
@@ -113,13 +102,10 @@ export function Hero() {
                   />
                   <line x1="136" y1="48" x2="145" y2="55" stroke="currentColor" strokeWidth="1.2" />
                   <line x1="133" y1="52" x2="141" y2="58" stroke="currentColor" strokeWidth="1.2" />
-                </motion.g>
+                </g>
 
                 {/* Floating Tilted Spec Note 3 (Upper Middle) */}
-                <motion.g
-                  animate={{ y: [0, -3, 0], rotate: [-3, 3, -3] }}
-                  transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut' }}
-                >
+                <g>
                   <path
                     d="M156 16 L172 12 L175 24 L159 28 Z"
                     stroke="currentColor"
@@ -128,18 +114,18 @@ export function Hero() {
                   />
                   <line x1="161" y1="18" x2="170" y2="16" stroke="currentColor" strokeWidth="1.2" />
                   <line x1="162" y1="22" x2="171" y2="20" stroke="currentColor" strokeWidth="1.2" />
-                </motion.g>
+                </g>
               </svg>
-            </motion.div>
+            </div>
 
-            {/* Reference-Style Bottom Action Row: Solid Rectangular Black Button on Left + Editorial Paragraph on Right */}
+            {/* Bottom Action Row: Solid Rectangular Black Button on Left + Editorial Paragraph on Right */}
             <motion.div
-              initial={{ opacity: 0, y: 16 }}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.55, delay: 0.45 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
               className="mt-8 flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:gap-8"
             >
-              <div className="flex flex-wrap items-center gap-3 shrink-0">
+              <div className="flex shrink-0 flex-wrap items-center gap-3">
                 <a
                   href="#work"
                   onClick={(e) => scrollToSection('work', e)}
@@ -163,25 +149,20 @@ export function Hero() {
             </motion.div>
 
             {/* Pipeline Strip */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-1.5 border-t border-border-strong/20 pt-5 font-mono text-[11px] font-semibold uppercase tracking-wider text-text-secondary"
-            >
+            <div className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-1.5 border-t border-border-strong/20 pt-5 font-mono text-[11px] font-semibold uppercase tracking-wider text-text-secondary">
               <span>Product thinking</span>
               <span className="text-accent">•</span>
               <span>AI-assisted development</span>
               <span className="text-accent">•</span>
               <span>Full-stack engineering</span>
-            </motion.div>
+            </div>
           </div>
 
-          {/* Right Column: Reference-Inspired Vermilion Sphere + Folded Charcoal Monolith + Interactive System Nodes */}
+          {/* Right Column: Vermilion Sphere + Folded Charcoal Monolith + Interactive System Nodes */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="lg:col-span-6"
           >
             <HeroSystemVisual />

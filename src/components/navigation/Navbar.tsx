@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Menu, Moon, Sun, X } from 'lucide-react';
 import { useTheme } from '../../hooks/useTheme';
+import { smoothScrollTo } from '../../utils/smoothScroll';
 
 interface NavItem {
   label: string;
@@ -29,25 +30,36 @@ export function Navbar() {
   }, [location.pathname, location.hash]);
 
   useEffect(() => {
-    const onScroll = () => {
-      if (location.pathname !== '/') return;
-      const sectionIds = ['work', 'ai-lab', 'process', 'about', 'contact'];
+    if (location.pathname !== '/') return;
+
+    let ticking = false;
+    const sectionIds = ['work', 'ai-lab', 'process', 'about', 'contact'];
+
+    const updateActiveSection = () => {
       let current = '';
       for (const id of sectionIds) {
         const el = document.getElementById(id);
         if (el) {
           const rect = el.getBoundingClientRect();
-          if (rect.top <= 200 && rect.bottom >= 200) {
+          if (rect.top <= 220 && rect.bottom >= 220) {
             current = id;
             break;
           }
         }
       }
-      setActiveSection(current);
+      setActiveSection((prev) => (prev !== current ? current : prev));
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateActiveSection);
+        ticking = true;
+      }
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+    updateActiveSection();
     return () => window.removeEventListener('scroll', onScroll);
   }, [location.pathname]);
 
@@ -56,18 +68,17 @@ export function Navbar() {
       const target = document.getElementById(item.sectionId);
       if (target) {
         e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth' });
         setMobileOpen(false);
+        smoothScrollTo(item.sectionId, 1150);
         return;
       }
     } else if (item.path === '/#process') {
       e.preventDefault();
+      setMobileOpen(false);
       navigate('/');
       setTimeout(() => {
-        const el = document.getElementById('process');
-        el?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-      setMobileOpen(false);
+        smoothScrollTo('process', 1150);
+      }, 120);
     }
   };
 
@@ -82,7 +93,7 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border-strong/20 bg-bg-primary/95 backdrop-blur-md">
+    <header className="sticky top-0 z-50 w-full border-b border-border-strong/20 bg-bg-primary">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Reference-inspired Architectural Vertical Partition Grid */}
         <div className="grid h-20 grid-cols-2 items-center md:grid-cols-12">
@@ -90,13 +101,12 @@ export function Navbar() {
           <div className="flex h-full items-center border-border-strong/30 md:col-span-3 md:border-r md:pr-6">
             <Link
               to="/"
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              onClick={() => smoothScrollTo(0, 950)}
               className="group flex items-center gap-3 focus:outline-none"
               aria-label="Anurag Sah Home"
             >
-              {/* Folded Monolith Icon (Directly inspired by reference logo) */}
               <svg
-                className="h-7 w-7 text-text-primary transition-transform duration-300 group-hover:scale-105"
+                className="h-7 w-7 text-text-primary transition-transform duration-200 group-hover:scale-105"
                 viewBox="0 0 32 32"
                 fill="none"
                 aria-hidden="true"
@@ -135,11 +145,7 @@ export function Navbar() {
                 >
                   {item.label}
                   {active && (
-                    <motion.span
-                      layoutId="editorial-nav-dot"
-                      className="absolute -bottom-1.5 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-accent"
-                      transition={{ type: 'spring', stiffness: 420, damping: 28 }}
-                    />
+                    <span className="absolute -bottom-1.5 left-1/2 h-1.5 w-1.5 -translate-x-1/2 rounded-full bg-accent" />
                   )}
                 </Link>
               );
@@ -168,7 +174,7 @@ export function Navbar() {
             </button>
           </div>
 
-          {/* Compartment 4: Rectangular Boxed CTA ("Sign up" style from reference) */}
+          {/* Compartment 4: Rectangular Boxed CTA */}
           <div className="flex h-full items-center justify-end gap-3 md:col-span-2 md:pl-6">
             <button
               type="button"
@@ -207,7 +213,7 @@ export function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.22 }}
             className="overflow-hidden border-t border-border-strong bg-bg-elevated md:hidden"
           >
             <nav aria-label="Mobile Navigation" className="flex flex-col divide-y divide-border-subtle px-4 py-4">

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  /* Primary Mode: Tactile Warm Editorial Paper + Stark Ink + Vermilion Red (Reference Aesthetic) */
+  /* Primary Mode: Tactile Warm Editorial Paper + Stark Ink + Vermilion Red */
   --bg-primary: #F1EFEA;
   --bg-elevated: #F8F6F2;
   --bg-surface: #E7E4DD;
@@ -49,8 +49,11 @@
 
 @layer base {
   html {
-    scroll-behavior: smooth;
+    /* Disable abrupt browser-native smooth scroll so our custom 60fps easing engine controls scroll speed */
+    scroll-behavior: auto;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
@@ -58,7 +61,6 @@
     color: var(--text-primary);
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
-    transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   :focus-visible {
@@ -67,7 +69,13 @@
   }
 }
 
-/* Tactile Paper Grain & Swiss Architectural Rule Lines */
+/* 60FPS GPU Compositing & Layout Containment Optimizations */
+.gpu-layer {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  will-change: transform;
+}
+
 .bg-architectural-grid {
   background-size: 64px 64px;
   background-image: 
@@ -75,42 +83,48 @@
     linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
 }
 
+/* Use GPU-accelerated transform transitions for locked 60fps interactions */
 .editorial-card {
   border: 1.5px solid var(--border-strong);
   background-color: var(--bg-elevated);
   box-shadow: var(--shadow-surface);
-  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .editorial-card:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: var(--shadow-elevated);
+  transform: translate3d(-2px, -2px, 0);
 }
 
 .editorial-btn-primary {
   background-color: var(--text-primary);
   color: var(--bg-primary);
   border: 1.5px solid var(--text-primary);
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
+  box-shadow: 3px 3px 0px 0px var(--accent-primary);
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
 }
 
 .editorial-btn-primary:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 5px 5px 0px 0px var(--accent-primary);
+  transform: translate3d(-2px, -2px, 0);
 }
 
 .editorial-btn-outline {
   background-color: transparent;
   color: var(--text-primary);
   border: 1.5px solid var(--border-strong);
-  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
+  box-shadow: 3px 3px 0px 0px transparent;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease, color 0.2s ease;
 }
 
 .editorial-btn-outline:hover {
   background-color: var(--text-primary);
   color: var(--bg-primary);
-  transform: translate(-2px, -2px);
-  box-shadow: 4px 4px 0px 0px var(--accent-primary);
+  transform: translate3d(-2px, -2px, 0);
 }
 
 /* Custom Scrollbar */

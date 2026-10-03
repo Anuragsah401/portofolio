@@ -58,19 +58,19 @@ export function HeroSystemVisual() {
   const [activeId, setActiveId] = useState<SystemNode['id']>('AI');
   const activeNode = nodes.find((n) => n.id === activeId) || nodes[0];
 
-  // Interactive 3D Parallax Mouse Tracking
+  // 60FPS GPU-accelerated spring tracking
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const springX = useSpring(mouseX, { stiffness: 140, damping: 22 });
-  const springY = useSpring(mouseY, { stiffness: 140, damping: 22 });
+  const springX = useSpring(mouseX, { stiffness: 120, damping: 24, mass: 0.5 });
+  const springY = useSpring(mouseY, { stiffness: 120, damping: 24, mass: 0.5 });
 
-  const orbX = useTransform(springX, [-0.5, 0.5], [-18, 18]);
-  const orbY = useTransform(springY, [-0.5, 0.5], [-18, 18]);
+  const orbX = useTransform(springX, [-0.5, 0.5], [-16, 16]);
+  const orbY = useTransform(springY, [-0.5, 0.5], [-16, 16]);
 
-  const polyX = useTransform(springX, [-0.5, 0.5], [22, -22]);
-  const polyY = useTransform(springY, [-0.5, 0.5], [16, -16]);
-  const polyRotate = useTransform(springX, [-0.5, 0.5], [-5, 5]);
+  const polyX = useTransform(springX, [-0.5, 0.5], [18, -18]);
+  const polyY = useTransform(springY, [-0.5, 0.5], [14, -14]);
+  const polyRotate = useTransform(springX, [-0.5, 0.5], [-3.5, 3.5]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -91,34 +91,31 @@ export function HeroSystemVisual() {
       onMouseLeave={handleMouseLeave}
       className="relative select-none"
     >
-      {/* Sculpture Canvas (Directly inspired by the reference's Red Circle + Folded Black Origami Sculpture + White Wireframe Intersection) */}
+      {/* Sculpture Canvas — Pure GPU transforms without expensive CSS filter: drop-shadow or blur repaints */}
       <div className="relative mx-auto h-[390px] w-full max-w-[520px] sm:h-[450px]">
-        {/* Soft Ground Contact Shadow underneath the folded monolith */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute bottom-6 left-1/2 h-9 w-64 -translate-x-1/2 rounded-full bg-black/25 blur-xl dark:bg-black/70"
-        />
-
-        {/* 1. Bold Vermilion Red-Orange Sphere (Upper-Left of Sculpture) */}
+        {/* 1. Bold Vermilion Red-Orange Sphere */}
         <motion.div
           style={{ x: orbX, y: orbY }}
-          animate={{ scale: [1, 1.025, 1] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          className="pointer-events-none absolute left-[10%] top-[6%] h-48 w-48 rounded-full bg-accent sm:left-[12%] sm:h-60 sm:w-60"
+          className="gpu-layer pointer-events-none absolute left-[10%] top-[6%] h-48 w-48 rounded-full bg-accent sm:left-[12%] sm:h-60 sm:w-60"
         />
 
-        {/* 2. Sculptural Folded Charcoal Monolith (Low-Poly Origami Charcoal Form) */}
+        {/* 2. Sculptural Folded Charcoal Monolith (Zero-filter SVG with baked radial contact shadow for locked 60fps) */}
         <motion.div
           style={{ x: polyX, y: polyY, rotate: polyRotate }}
-          className="pointer-events-none absolute inset-0 flex items-center justify-center"
+          className="gpu-layer pointer-events-none absolute inset-0 flex items-center justify-center"
         >
           <svg
             viewBox="0 0 500 460"
-            className="h-full w-full drop-shadow-[0_28px_32px_rgba(0,0,0,0.22)]"
+            className="h-full w-full"
             fill="none"
             aria-hidden="true"
           >
             <defs>
+              <radialGradient id="contact-shadow" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="rgba(0,0,0,0.28)" />
+                <stop offset="65%" stopColor="rgba(0,0,0,0.10)" />
+                <stop offset="100%" stopColor="rgba(0,0,0,0)" />
+              </radialGradient>
               <linearGradient id="facet-dark-1" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#2B2B2B" />
                 <stop offset="100%" stopColor="#121212" />
@@ -141,14 +138,17 @@ export function HeroSystemVisual() {
               </linearGradient>
             </defs>
 
-            {/* Outer Sculptural Origami Facets (Tactile folded dark paper geometry) */}
+            {/* Baked Ground Shadow Ellipse (Zero GPU blur cost) */}
+            <ellipse cx="275" cy="418" rx="145" ry="22" fill="url(#contact-shadow)" />
+
+            {/* Outer Sculptural Origami Facets */}
             <polygon points="260,68 355,54 392,126 305,152" fill="url(#facet-dark-2)" />
             <polygon points="355,54 416,95 392,126" fill="#141414" />
             <polygon points="195,128 260,68 305,152 222,198" fill="url(#facet-dark-1)" />
             <polygon points="305,152 392,126 438,205 342,248" fill="url(#facet-highlight)" />
             <polygon points="392,126 446,162 438,205" fill="#171717" />
 
-            {/* Intersection Zone with the Red Sphere (Deep Crimson/Rust Facets + Crisp White Wireframes) */}
+            {/* Intersection Zone with the Red Sphere */}
             <polygon
               points="162,150 232,156 218,246 150,238"
               fill="url(#vermilion-intersect)"
@@ -177,7 +177,7 @@ export function HeroSystemVisual() {
             <polygon points="228,365 316,320 356,374 246,404" fill="url(#facet-highlight)" />
             <polygon points="316,320 386,315 418,358 356,374" fill="#121212" />
 
-            {/* Subtle internal architectural ridge creases */}
+            {/* Internal architectural ridge creases */}
             <line x1="260" y1="68" x2="305" y2="152" stroke="rgba(255,255,255,0.16)" strokeWidth="1" />
             <line x1="305" y1="152" x2="342" y2="248" stroke="rgba(255,255,255,0.18)" strokeWidth="1" />
             <line x1="218" y1="246" x2="228" y2="365" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
@@ -185,32 +185,21 @@ export function HeroSystemVisual() {
           </svg>
         </motion.div>
 
-        {/* 3. Interactive Floating Architectural Node Pills (AI / PRODUCT / CODE / DATA / SYSTEM) */}
-        {nodes.map((node, index) => {
+        {/* 3. Interactive Architectural Node Pills */}
+        {nodes.map((node) => {
           const isActive = activeId === node.id;
           return (
-            <motion.button
+            <button
               key={node.id}
               type="button"
               onMouseEnter={() => setActiveId(node.id)}
               onFocus={() => setActiveId(node.id)}
               onClick={() => setActiveId(node.id)}
-              initial={{ opacity: 0, scale: 0.85 }}
-              animate={{
-                opacity: 1,
-                scale: isActive ? 1.06 : 1,
-                y: [0, index % 2 === 0 ? -5 : 5, 0],
-              }}
-              transition={{
-                opacity: { duration: 0.4, delay: index * 0.08 },
-                scale: { type: 'spring', stiffness: 400, damping: 24 },
-                y: { duration: 4 + index * 0.5, repeat: Infinity, ease: 'easeInOut' },
-              }}
               style={{ left: node.coords.x, top: node.coords.y }}
-              className={`group absolute z-20 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 border px-3.5 py-2 font-mono text-xs font-bold tracking-wider transition-colors ${
+              className={`gpu-layer group absolute z-20 flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 border px-3.5 py-2 font-mono text-xs font-bold tracking-wider transition-transform duration-150 ${
                 isActive
-                  ? 'border-border-strong bg-accent text-white shadow-[4px_4px_0px_0px_#111111]'
-                  : 'border-border-strong bg-bg-elevated text-text-primary shadow-[3px_3px_0px_0px_#111111] hover:bg-text-primary hover:text-bg-primary'
+                  ? 'scale-105 border-border-strong bg-accent text-white shadow-[4px_4px_0px_0px_#111111]'
+                  : 'scale-100 border-border-strong bg-bg-elevated text-text-primary shadow-[3px_3px_0px_0px_#111111] hover:scale-105 hover:bg-text-primary hover:text-bg-primary'
               }`}
             >
               <span
@@ -219,7 +208,7 @@ export function HeroSystemVisual() {
                 }`}
               />
               <span>{node.label}</span>
-            </motion.button>
+            </button>
           );
         })}
       </div>
@@ -229,10 +218,10 @@ export function HeroSystemVisual() {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeNode.id}
-            initial={{ opacity: 0, y: 6 }}
+            initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.2 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.16 }}
           >
             <div className="flex flex-wrap items-center justify-between gap-2 border-b border-border-subtle pb-3">
               <div className="flex items-center gap-2.5">
