@@ -3,49 +3,48 @@
 @tailwind utilities;
 
 :root {
-  /* Light Mode - Editorial Paper & Architectural Ink */
-  --bg-primary: #F8F8F6;
-  --bg-elevated: #FFFFFF;
-  --bg-surface: #F1F1EE;
-  --bg-subtle: #E8E8E3;
+  /* Primary Mode: Tactile Warm Editorial Paper + Stark Ink + Vermilion Red (Reference Aesthetic) */
+  --bg-primary: #F1EFEA;
+  --bg-elevated: #F8F6F2;
+  --bg-surface: #E7E4DD;
+  --bg-subtle: #DDD9D0;
 
-  --text-primary: #0D0E12;
-  --text-secondary: #4A4D57;
-  --text-muted: #767A87;
+  --text-primary: #111111;
+  --text-secondary: #3A3935;
+  --text-muted: #6E6C65;
 
-  --border-subtle: rgba(13, 14, 18, 0.08);
-  --border-strong: rgba(13, 14, 18, 0.16);
+  --border-subtle: rgba(17, 17, 17, 0.14);
+  --border-strong: #111111;
 
-  /* Sophisticated Precision Emerald Accent */
-  --accent-primary: #0D9467;
-  --accent-soft: rgba(13, 148, 103, 0.09);
-  --accent-border: rgba(13, 148, 103, 0.28);
+  /* Bold International Vermilion Red-Orange Orb Accent */
+  --accent-primary: #EB3300;
+  --accent-soft: rgba(235, 51, 0, 0.10);
+  --accent-border: rgba(235, 51, 0, 0.40);
 
-  --shadow-surface: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px -4px rgba(0, 0, 0, 0.04);
-  --shadow-elevated: 0 12px 36px -8px rgba(0, 0, 0, 0.08);
+  --shadow-surface: 4px 4px 0px 0px #111111;
+  --shadow-elevated: 8px 8px 0px 0px #111111;
 }
 
 .dark {
-  /* Dark Mode (Primary) - Deep Charcoal / Near-Black Obsidian */
-  --bg-primary: #090A0D;
-  --bg-elevated: #101217;
-  --bg-surface: #151820;
-  --bg-subtle: #1C202B;
+  /* Inverted Carbon Ink & Vermilion Mode */
+  --bg-primary: #0E0E0E;
+  --bg-elevated: #161616;
+  --bg-surface: #1F1F1F;
+  --bg-subtle: #292929;
 
-  --text-primary: #F3F4F6;
-  --text-secondary: #9CA3AF;
-  --text-muted: #646B78;
+  --text-primary: #F3F1EC;
+  --text-secondary: #B8B5AD;
+  --text-muted: #7C7970;
 
-  --border-subtle: rgba(255, 255, 255, 0.075);
-  --border-strong: rgba(255, 255, 255, 0.15);
+  --border-subtle: rgba(243, 241, 236, 0.15);
+  --border-strong: #F3F1EC;
 
-  /* Sophisticated Precision Emerald Accent */
-  --accent-primary: #10B981;
-  --accent-soft: rgba(16, 185, 129, 0.10);
-  --accent-border: rgba(16, 185, 129, 0.30);
+  --accent-primary: #FF3B00;
+  --accent-soft: rgba(255, 59, 0, 0.14);
+  --accent-border: rgba(255, 59, 0, 0.45);
 
-  --shadow-surface: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset, 0 12px 32px -8px rgba(0, 0, 0, 0.5);
-  --shadow-elevated: 0 1px 0 0 rgba(255, 255, 255, 0.07) inset, 0 24px 48px -12px rgba(0, 0, 0, 0.75);
+  --shadow-surface: 4px 4px 0px 0px rgba(243, 241, 236, 0.9);
+  --shadow-elevated: 8px 8px 0px 0px #FF3B00;
 }
 
 @layer base {
@@ -59,28 +58,59 @@
     color: var(--text-primary);
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
-    transition: background-color 0.25s ease, color 0.25s ease;
+    transition: background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1), color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   }
 
-  /* Visible accessible keyboard focus ring */
   :focus-visible {
     outline: 2px solid var(--accent-primary);
     outline-offset: 3px;
-    border-radius: 4px;
   }
 }
 
-/* Architectural Grid Background Pattern */
+/* Tactile Paper Grain & Swiss Architectural Rule Lines */
 .bg-architectural-grid {
-  background-size: 48px 48px;
+  background-size: 64px 64px;
   background-image: 
     linear-gradient(to right, var(--border-subtle) 1px, transparent 1px),
     linear-gradient(to bottom, var(--border-subtle) 1px, transparent 1px);
 }
 
-.bg-dot-matrix {
-  background-image: radial-gradient(var(--border-strong) 1px, transparent 1px);
-  background-size: 20px 20px;
+.editorial-card {
+  border: 1.5px solid var(--border-strong);
+  background-color: var(--bg-elevated);
+  box-shadow: var(--shadow-surface);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.editorial-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-elevated);
+}
+
+.editorial-btn-primary {
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+  border: 1.5px solid var(--text-primary);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.editorial-btn-primary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px 0px var(--accent-primary);
+}
+
+.editorial-btn-outline {
+  background-color: transparent;
+  color: var(--text-primary);
+  border: 1.5px solid var(--border-strong);
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
+}
+
+.editorial-btn-outline:hover {
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0px 0px var(--accent-primary);
 }
 
 /* Custom Scrollbar */
@@ -94,10 +124,9 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
-  border-radius: 4px;
+  background: var(--text-primary);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: var(--accent-primary);
 }

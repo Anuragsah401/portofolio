@@ -45,7 +45,6 @@ export function ContactSection() {
         setSubmitState('success');
         reset();
       } else {
-        // Honest client-side mailto preparation when no backend endpoint is configured
         setDeliveryMode('mailto');
         await new Promise((resolve) => setTimeout(resolve, 400));
         const subject = encodeURIComponent(`Product Inquiry from ${data.name}`);
@@ -73,40 +72,40 @@ export function ContactSection() {
               subtitle="I'm interested in building useful digital products, AI-powered experiences, and modern business solutions."
             />
 
-            <div className="mt-8 space-y-4">
+            <div className="mt-8 space-y-6">
               <a
                 href={`mailto:${socialData.email}`}
-                className="group inline-flex items-center gap-3 rounded-sm bg-text-primary px-6 py-3.5 text-sm font-semibold text-bg-primary transition-opacity hover:opacity-90"
+                className="editorial-btn-primary inline-flex items-center gap-3 px-7 py-4 text-sm font-bold"
               >
                 <Mail className="h-4 w-4" />
                 <span>Start a conversation</span>
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                <ArrowUpRight className="h-4 w-4" />
               </a>
 
               <div className="pt-6">
-                <div className="mb-3 font-mono text-xs uppercase tracking-widest text-text-muted">
+                <div className="mb-3 font-mono text-xs font-bold uppercase tracking-widest text-text-muted">
                   Direct Channels
                 </div>
-                <div className="divide-y divide-border-subtle border-y border-border-subtle">
+                <div className="divide-y divide-border-strong/30 border-y-2 border-border-strong">
                   {socialData.profiles.map((profile) => (
                     <a
                       key={profile.name}
                       href={profile.href}
                       target={profile.href.startsWith('http') ? '_blank' : undefined}
                       rel={profile.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                      className="group flex items-center justify-between py-3.5 transition-colors hover:text-accent"
+                      className="group flex items-center justify-between py-4 transition-colors hover:text-accent"
                     >
                       <div>
-                        <span className="text-sm font-semibold text-text-primary group-hover:text-accent">
+                        <span className="text-sm font-extrabold text-text-primary group-hover:text-accent">
                           {profile.name}
                         </span>
-                        <span className="ml-3 font-mono text-xs text-text-muted">
+                        <span className="ml-3 font-mono text-xs font-medium text-text-muted">
                           {profile.label}
                         </span>
                       </div>
-                      <div className="flex items-center gap-1.5 font-mono text-xs text-text-secondary">
+                      <div className="flex items-center gap-1.5 font-mono text-xs font-semibold text-text-secondary">
                         <span>{profile.handle}</span>
-                        <ArrowUpRight className="h-3.5 w-3.5 text-text-muted transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
+                        <ArrowUpRight className="h-3.5 w-3.5 text-text-primary transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent" />
                       </div>
                     </a>
                   ))}
@@ -117,12 +116,12 @@ export function ContactSection() {
 
           {/* Right Column: React Hook Form */}
           <div className="lg:col-span-6">
-            <div className="rounded-md border border-border-strong bg-bg-elevated p-6 shadow-surface sm:p-8">
-              <div className="mb-6 border-b border-border-subtle pb-4">
-                <h3 className="text-lg font-semibold text-text-primary">
+            <div className="editorial-card p-6 sm:p-8">
+              <div className="mb-6 border-b border-border-strong/30 pb-4">
+                <h3 className="text-xl font-extrabold text-text-primary">
                   Send a direct message
                 </h3>
-                <p className="mt-1 text-xs text-text-secondary">
+                <p className="mt-1 text-xs font-medium text-text-secondary">
                   Outline the product idea, problem, or system you want to build.
                 </p>
               </div>
@@ -132,7 +131,7 @@ export function ContactSection() {
                 <div>
                   <label
                     htmlFor="contact-name"
-                    className="block font-mono text-xs uppercase tracking-wider text-text-secondary"
+                    className="block font-mono text-xs font-bold uppercase tracking-wider text-text-primary"
                   >
                     Name
                   </label>
@@ -144,10 +143,10 @@ export function ContactSection() {
                       required: 'Please enter your name.',
                       minLength: { value: 2, message: 'Name must be at least 2 characters.' },
                     })}
-                    className="mt-2 w-full rounded-sm border border-border-strong bg-bg-primary px-3.5 py-2.5 text-sm text-text-primary placeholder:text-text-muted focus:border-accent focus:outline-none"
+                    className="mt-2 w-full border-2 border-border-strong bg-bg-primary px-3.5 py-2.5 text-sm font-medium text-text-primary placeholder:text-text-muted focus:border-accent focus:outline-none"
                   />
                   {errors.name && (
-                    <p role="alert" className="mt-1.5 font-mono text-xs text-red-400">
+                    <p role="alert" className="mt-1.5 font-mono text-xs font-bold text-accent">
                       {errors.name.message}
                     </p>
                   )}
@@ -157,7 +156,7 @@ export function ContactSection() {
                 <div>
                   <label
                     htmlFor="contact-email"
-                    className="block font-mono text-xs uppercase tracking-wider text-text-secondary"
+                    className="block font-mono text-xs font-bold uppercase tracking-wider text-text-primary"
                   >
                     Email
                   </label>
@@ -172,10 +171,10 @@ export function ContactSection() {
                         message: 'Please enter a valid email address.',
                       },
                     })}
-                    className="mt-2 w-full rounded-sm border border-border-strong bg-bg-primary px-3.5 py-2.5 text-sm text-text-primary placeholder:text-text-muted focus:border-accent focus:outline-none"
+                    className="mt-2 w-full border-2 border-border-strong bg-bg-primary px-3.5 py-2.5 text-sm font-medium text-text-primary placeholder:text-text-muted focus:border-accent focus:outline-none"
                   />
                   {errors.email && (
-                    <p role="alert" className="mt-1.5 font-mono text-xs text-red-400">
+                    <p role="alert" className="mt-1.5 font-mono text-xs font-bold text-accent">
                       {errors.email.message}
                     </p>
                   )}
@@ -185,7 +184,7 @@ export function ContactSection() {
                 <div>
                   <label
                     htmlFor="contact-message"
-                    className="block font-mono text-xs uppercase tracking-wider text-text-secondary"
+                    className="block font-mono text-xs font-bold uppercase tracking-wider text-text-primary"
                   >
                     Message
                   </label>
@@ -200,10 +199,10 @@ export function ContactSection() {
                         message: 'Message should be at least 10 characters.',
                       },
                     })}
-                    className="mt-2 w-full resize-y rounded-sm border border-border-strong bg-bg-primary px-3.5 py-2.5 text-sm text-text-primary placeholder:text-text-muted focus:border-accent focus:outline-none"
+                    className="mt-2 w-full resize-y border-2 border-border-strong bg-bg-primary px-3.5 py-2.5 text-sm font-medium text-text-primary placeholder:text-text-muted focus:border-accent focus:outline-none"
                   />
                   {errors.message && (
-                    <p role="alert" className="mt-1.5 font-mono text-xs text-red-400">
+                    <p role="alert" className="mt-1.5 font-mono text-xs font-bold text-accent">
                       {errors.message.message}
                     </p>
                   )}
@@ -212,7 +211,7 @@ export function ContactSection() {
                 <button
                   type="submit"
                   disabled={submitState === 'submitting'}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-sm bg-accent px-5 py-3 text-sm font-semibold text-bg-primary transition-opacity hover:opacity-90 disabled:opacity-50"
+                  className="editorial-btn-primary inline-flex w-full items-center justify-center gap-2 px-5 py-3.5 text-sm font-bold disabled:opacity-50"
                 >
                   {submitState === 'submitting' ? (
                     <>
@@ -227,11 +226,10 @@ export function ContactSection() {
                   )}
                 </button>
 
-                {/* Status Feedback */}
                 {submitState === 'success' && (
                   <div
                     role="status"
-                    className="flex items-start gap-2.5 rounded-sm border border-accent-border bg-accent-soft p-3.5 text-xs text-text-primary"
+                    className="flex items-start gap-2.5 border-2 border-border-strong bg-bg-primary p-3.5 text-xs font-medium text-text-primary"
                   >
                     <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
                     <div>
@@ -250,12 +248,12 @@ export function ContactSection() {
                 {submitState === 'error' && (
                   <div
                     role="alert"
-                    className="flex items-start gap-2.5 rounded-sm border border-red-500/40 bg-red-500/10 p-3.5 text-xs text-red-300"
+                    className="flex items-start gap-2.5 border-2 border-accent bg-accent-soft p-3.5 text-xs font-medium text-text-primary"
                   >
-                    <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" />
+                    <AlertCircle className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
                     <span>
                       Unable to submit automatically. Please email{' '}
-                      <a href={`mailto:${socialData.email}`} className="underline">
+                      <a href={`mailto:${socialData.email}`} className="underline font-bold">
                         {socialData.email}
                       </a>{' '}
                       directly.

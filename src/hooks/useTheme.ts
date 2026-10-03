@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 
-type Theme = 'dark' | 'light';
+type Theme = 'light' | 'dark';
 
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>(() => {
-    if (typeof window === 'undefined') return 'dark';
-    const stored = localStorage.getItem('anurag-theme') as Theme | null;
-    if (stored === 'dark' || stored === 'light') return stored;
-    return 'dark';
+    if (typeof window === 'undefined') return 'light';
+    const stored = localStorage.getItem('anurag-editorial-theme') as Theme | null;
+    if (stored === 'light' || stored === 'dark') return stored;
+    return 'light';
   });
 
   useEffect(() => {
@@ -17,11 +17,11 @@ export function useTheme() {
     } else {
       root.classList.remove('dark');
     }
-    localStorage.setItem('anurag-theme', theme);
+    localStorage.setItem('anurag-editorial-theme', theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
   };
 
   return { theme, toggleTheme };

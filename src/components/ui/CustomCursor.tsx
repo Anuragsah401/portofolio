@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
+import { motion, useSpring } from 'framer-motion';
 
 export function CustomCursor() {
-  const [position, setPosition] = useState({ x: -100, y: -100 });
   const [isHovering, setIsHovering] = useState(false);
   const [enabled, setEnabled] = useState(false);
+
+  const cursorX = useSpring(-100, { stiffness: 520, damping: 34 });
+  const cursorY = useSpring(-100, { stiffness: 520, damping: 34 });
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(pointer: fine) and (prefers-reduced-motion: no-preference)');
@@ -15,7 +18,8 @@ export function CustomCursor() {
     if (!mediaQuery.matches) return;
 
     const onMouseMove = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
       const target = e.target as HTMLElement | null;
       const interactive = target?.closest('a, button, [role="button"], input, textarea, select');
       setIsHovering(Boolean(interactive));
@@ -26,25 +30,32 @@ export function CustomCursor() {
       window.removeEventListener('mousemove', onMouseMove);
       mediaQuery.removeEventListener('change', handleChange);
     };
-  }, []);
+  }, [cursorX, cursorY]);
 
   if (!enabled) return null;
 
   return (
-    <div
+    <motion.div
       aria-hidden="true"
       className="pointer-events-none fixed left-0 top-0 z-[100] hidden lg:block"
       style={{
-        transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
+        x: cursorX,
+        y: cursorY,
       }}
     >
       <div
-        className={`-ml-3 -mt-3 h-6 w-6 rounded-full border transition-all duration-150 ease-out ${
+        className={`-ml-3.5 -mt-3.5 flex h-7 w-7 items-center justify-center rounded-full border transition-all duration-200 ${
           isHovering
-            ? 'scale-150 border-accent/60 bg-accent/10'
-            : 'scale-100 border-text-muted/30 bg-transparent'
+            ? 'scale-150 border-accent bg-accent/20'
+            : 'scale-100 border-text-primary/50 bg-transparent'
         }`}
-      />
-    </div>
+      >
+        <span
+          className={`h-1.5 w-1.5 rounded-full transition-colors ${
+            isHovering ? 'bg-accent' : 'bg-text-primary'
+          }`}
+        />
+      </div>
+    </motion.div>
   );
 }

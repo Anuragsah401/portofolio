@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
 import { HeroSystemVisual } from './HeroSystemVisual';
+
+const headlineLines = [
+  'I build digital',
+  'products with AI.',
+  'Turn ideas real!',
+];
 
 export function Hero() {
   const scrollToSection = (id: string, e: React.MouseEvent) => {
@@ -13,101 +18,171 @@ export function Hero() {
   };
 
   return (
-    <section className="relative overflow-hidden border-b border-border-subtle bg-architectural-grid pt-10 pb-20 md:pt-16 md:pb-28">
-      {/* Subtle radial vignette so the grid feels refined */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-gradient-to-b from-bg-primary/40 via-transparent to-bg-primary"
-      />
-
+    <section className="relative overflow-hidden border-b border-border-strong/20 pt-10 pb-20 md:pt-14 md:pb-28">
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-10">
-          {/* Left Column: Editorial Positioning */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="lg:col-span-7"
-          >
-            {/* Status Pill */}
-            <div className="mb-6 inline-flex items-center gap-2 rounded-sm border border-border-strong bg-bg-elevated px-3 py-1.5">
-              <Sparkles className="h-3.5 w-3.5 text-accent" />
-              <span className="font-mono text-xs font-medium tracking-wide text-text-secondary">
-                AI Product Builder · Full-Stack Product Engineer
-              </span>
-            </div>
+        <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-12 lg:gap-8">
+          {/* Left Column: Editorial Display Typography + Hand-Sketched Squiggle + Side-by-Side CTA & Copy */}
+          <div className="lg:col-span-6">
+            {/* Positioning Eyebrow */}
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45 }}
+              className="mb-6 inline-flex items-center gap-2.5 border border-border-strong bg-bg-elevated px-3.5 py-1.5 font-mono text-xs font-bold uppercase tracking-wider text-text-primary shadow-[3px_3px_0px_0px_#111111]"
+            >
+              <span className="h-2 w-2 rounded-full bg-accent" />
+              <span>AI Product Builder · Full-Stack Engineer</span>
+            </motion.div>
 
-            {/* Main Headline */}
-            <h1 className="text-4xl font-semibold leading-[1.06] tracking-tightest text-text-primary sm:text-5xl md:text-6xl lg:text-[64px]">
-              I build digital products{' '}
-              <span className="font-display italic font-normal text-accent">
-                with AI.
-              </span>
+            {/* Reference-Inspired 3-Line Heavy Geometric Headline */}
+            <h1 className="text-[44px] font-extrabold leading-[1.03] tracking-tightest text-text-primary sm:text-6xl lg:text-[68px]">
+              {headlineLines.map((line, idx) => (
+                <motion.span
+                  key={line}
+                  initial={{ opacity: 0, y: 28 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.6,
+                    delay: 0.08 * idx,
+                    ease: [0.16, 1, 0.3, 1],
+                  }}
+                  className="block"
+                >
+                  {idx === 1 ? (
+                    <>
+                      products with <span className="text-accent">AI.</span>
+                    </>
+                  ) : (
+                    line
+                  )}
+                </motion.span>
+              ))}
             </h1>
 
-            {/* Supporting Message */}
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-text-secondary sm:text-xl">
-              I turn ideas, business problems, and opportunities into modern digital
-              products, intelligent systems, and scalable web applications.
-            </p>
-
-            {/* Positioning Bar */}
-            <div className="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-wider text-text-muted">
-              <span className="text-text-primary">Product thinking</span>
-              <span className="text-accent">·</span>
-              <span className="text-text-primary">AI-assisted development</span>
-              <span className="text-accent">·</span>
-              <span className="text-text-primary">Full-stack engineering</span>
-            </div>
-
-            {/* Primary & Secondary CTAs */}
-            <div className="mt-9 flex flex-col gap-3.5 sm:flex-row sm:items-center">
-              <a
-                href="#work"
-                onClick={(e) => scrollToSection('work', e)}
-                className="group inline-flex items-center justify-center gap-2.5 rounded-sm bg-text-primary px-6 py-3.5 text-sm font-semibold text-bg-primary transition-transform active:scale-[0.99] hover:opacity-90"
+            {/* Signature Hand-Drawn Sketch Waveform + Floating Spec Sheets (Directly inspired by the reference image) */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.35 }}
+              className="my-8 max-w-md"
+              aria-hidden="true"
+            >
+              <svg
+                viewBox="0 0 420 68"
+                fill="none"
+                className="w-full overflow-visible text-text-primary"
               >
-                <span>Explore my work</span>
-                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </a>
+                {/* Floating Tilted Document / Product Spec Icon 1 (Left) */}
+                <motion.g
+                  animate={{ y: [0, -4, 0], rotate: [-2, 2, -2] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  <path
+                    d="M8 22 L20 10 L34 20 L22 38 Z"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    fill="var(--bg-elevated)"
+                  />
+                  <line x1="16" y1="19" x2="25" y2="25" stroke="currentColor" strokeWidth="1.3" />
+                  <line x1="14" y1="23" x2="22" y2="29" stroke="currentColor" strokeWidth="1.3" />
+                  <line x1="12" y1="27" x2="19" y2="32" stroke="currentColor" strokeWidth="1.3" />
+                </motion.g>
 
-              <Link
-                to="/contact"
-                onClick={(e) => scrollToSection('contact', e)}
-                className="inline-flex items-center justify-center gap-2 rounded-sm border border-border-strong bg-bg-elevated px-6 py-3.5 text-sm font-medium text-text-primary transition-colors hover:border-accent hover:text-accent"
-              >
-                <span>Let's build something</span>
-              </Link>
-            </div>
+                {/* Animated Hand-Sketched Sine Squiggle Extending into Long Architectural Line */}
+                <motion.path
+                  d="M42 36 L68 36 C72 36 74 16 78 16 C82 16 84 52 88 52 C92 52 94 20 98 20 C102 20 104 48 108 48 C112 48 114 22 118 22 C121 22 123 36 128 36 L408 34"
+                  stroke="currentColor"
+                  strokeWidth="1.75"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  initial={{ pathLength: 0 }}
+                  animate={{ pathLength: 1 }}
+                  transition={{ duration: 1.4, delay: 0.3, ease: 'easeInOut' }}
+                />
 
-            {/* Bottom Pipeline Strip (IDEA -> PRODUCT -> AI -> ENGINEERING -> BUSINESS) */}
-            <div className="mt-12 border-t border-border-subtle pt-6">
-              <div className="mb-2 font-mono text-[11px] uppercase tracking-widest text-text-muted">
-                Execution Pipeline
+                {/* Floating Tilted Spec Note 2 (Bottom Center) */}
+                <motion.g
+                  animate={{ y: [0, 4, 0], rotate: [3, -2, 3] }}
+                  transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  <path
+                    d="M128 50 L142 40 L154 52 L140 63 Z"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    fill="var(--bg-elevated)"
+                  />
+                  <line x1="136" y1="48" x2="145" y2="55" stroke="currentColor" strokeWidth="1.2" />
+                  <line x1="133" y1="52" x2="141" y2="58" stroke="currentColor" strokeWidth="1.2" />
+                </motion.g>
+
+                {/* Floating Tilted Spec Note 3 (Upper Middle) */}
+                <motion.g
+                  animate={{ y: [0, -3, 0], rotate: [-3, 3, -3] }}
+                  transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut' }}
+                >
+                  <path
+                    d="M156 16 L172 12 L175 24 L159 28 Z"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    fill="var(--bg-elevated)"
+                  />
+                  <line x1="161" y1="18" x2="170" y2="16" stroke="currentColor" strokeWidth="1.2" />
+                  <line x1="162" y1="22" x2="171" y2="20" stroke="currentColor" strokeWidth="1.2" />
+                </motion.g>
+              </svg>
+            </motion.div>
+
+            {/* Reference-Style Bottom Action Row: Solid Rectangular Black Button on Left + Editorial Paragraph on Right */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.55, delay: 0.45 }}
+              className="mt-8 flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:gap-8"
+            >
+              <div className="flex flex-wrap items-center gap-3 shrink-0">
+                <a
+                  href="#work"
+                  onClick={(e) => scrollToSection('work', e)}
+                  className="editorial-btn-primary inline-flex items-center justify-center px-8 py-4 text-sm font-bold tracking-wide"
+                >
+                  Explore my work
+                </a>
+                <Link
+                  to="/contact"
+                  onClick={(e) => scrollToSection('contact', e)}
+                  className="editorial-btn-outline inline-flex items-center justify-center px-5 py-4 text-sm font-bold"
+                >
+                  Let&apos;s build
+                </Link>
               </div>
-              <div className="flex flex-wrap items-center gap-2 font-mono text-xs text-text-secondary">
-                {['IDEA', 'PRODUCT', 'AI', 'ENGINEERING', 'BUSINESS'].map((step, idx, arr) => (
-                  <div key={step} className="flex items-center gap-2">
-                    <span className="rounded border border-border-subtle bg-bg-elevated px-2 py-1 text-[11px] font-medium text-text-primary">
-                      {step}
-                    </span>
-                    {idx < arr.length - 1 && (
-                      <span className="text-text-muted" aria-hidden="true">
-                        →
-                      </span>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
 
-          {/* Right Column: Interactive Signature Hero Visual */}
+              <p className="max-w-xs text-xs font-medium leading-relaxed text-text-secondary sm:text-sm">
+                I turn ideas, business problems, and opportunities into modern digital
+                products, intelligent systems, and scalable web applications.
+              </p>
+            </motion.div>
+
+            {/* Pipeline Strip */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="mt-10 flex flex-wrap items-center gap-x-3 gap-y-1.5 border-t border-border-strong/20 pt-5 font-mono text-[11px] font-semibold uppercase tracking-wider text-text-secondary"
+            >
+              <span>Product thinking</span>
+              <span className="text-accent">•</span>
+              <span>AI-assisted development</span>
+              <span className="text-accent">•</span>
+              <span>Full-stack engineering</span>
+            </motion.div>
+          </div>
+
+          {/* Right Column: Reference-Inspired Vermilion Sphere + Folded Charcoal Monolith + Interactive System Nodes */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-            className="lg:col-span-5"
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-6"
           >
             <HeroSystemVisual />
           </motion.div>

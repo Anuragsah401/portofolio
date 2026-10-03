@@ -30,42 +30,42 @@ const pillars = [
 
 export function Introduction() {
   return (
-    <section className="border-b border-border-subtle py-20 md:py-28">
+    <section className="border-b border-border-strong/20 py-20 md:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
           {/* Left Editorial Statement */}
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.55 }}
             className="lg:col-span-6"
           >
-            <div className="mb-4 flex items-center gap-3 font-mono text-xs uppercase tracking-widest text-text-muted">
-              <span className="inline-flex items-center rounded border border-border-strong bg-bg-surface px-2 py-0.5 text-[11px] font-medium text-accent">
+            <div className="mb-5 flex items-center gap-3 font-mono text-xs font-bold uppercase tracking-widest">
+              <span className="inline-flex h-6 items-center border border-border-strong bg-accent px-2 text-[11px] text-white">
                 01
               </span>
-              <span className="h-px w-6 bg-border-strong" />
-              <span className="text-text-secondary">Product Philosophy</span>
+              <span className="h-[1.5px] w-8 bg-text-primary" />
+              <span className="text-text-primary">Product Philosophy</span>
             </div>
 
-            <h2 className="text-3xl font-semibold leading-[1.12] tracking-tightest text-text-primary sm:text-4xl md:text-5xl">
-              I don't just build interfaces.{' '}
-              <span className="block font-display italic font-normal text-accent">
+            <h2 className="text-4xl font-extrabold leading-[1.05] tracking-tightest text-text-primary sm:text-5xl">
+              I don&apos;t just build interfaces.{' '}
+              <span className="mt-1 block text-accent">
                 I build products.
               </span>
             </h2>
 
-            <p className="mt-6 text-base leading-relaxed text-text-secondary sm:text-lg">
+            <p className="mt-6 text-base font-medium leading-relaxed text-text-secondary sm:text-lg">
               Great software is more than isolated screens or endpoints. It is the alignment
               of user experience, domain architecture, intelligent automation, and real-world
               business execution.
             </p>
 
-            <div className="mt-8 rounded-sm border border-border-subtle bg-bg-elevated p-5">
-              <p className="font-mono text-xs leading-relaxed text-text-secondary">
+            <div className="editorial-card mt-8 p-5">
+              <p className="font-mono text-xs font-medium leading-relaxed text-text-secondary">
                 &ldquo;I turn ideas into{' '}
-                <strong className="font-semibold text-text-primary">digital products</strong>{' '}
+                <strong className="font-bold text-text-primary">digital products</strong>{' '}
                 — bridging product design, full-stack engineering, and AI systems to solve
                 concrete operational problems.&rdquo;
               </p>
@@ -74,23 +74,23 @@ export function Introduction() {
 
           {/* Right Structured Pillars */}
           <div className="lg:col-span-6">
-            <div className="divide-y divide-border-subtle border-y border-border-subtle">
+            <div className="divide-y divide-border-strong/25 border-y border-border-strong">
               {pillars.map((pillar, idx) => (
                 <motion.div
                   key={pillar.code}
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, x: 16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, margin: '-40px' }}
-                  transition={{ duration: 0.35, delay: idx * 0.05 }}
-                  className="group flex flex-col gap-2 py-5 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6"
+                  transition={{ duration: 0.4, delay: idx * 0.06 }}
+                  className="group flex flex-col gap-2 py-5 transition-colors hover:bg-bg-elevated/60 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6 sm:px-3"
                 >
                   <div className="flex items-baseline gap-3 sm:w-56 sm:shrink-0">
-                    <span className="font-mono text-xs text-accent">{pillar.code}</span>
-                    <h3 className="text-base font-semibold text-text-primary">
+                    <span className="font-mono text-xs font-bold text-accent">{pillar.code}</span>
+                    <h3 className="text-base font-bold text-text-primary">
                       {pillar.title}
                     </h3>
                   </div>
-                  <p className="text-sm leading-relaxed text-text-secondary">
+                  <p className="text-sm font-medium leading-relaxed text-text-secondary">
                     {pillar.detail}
                   </p>
                 </motion.div>
